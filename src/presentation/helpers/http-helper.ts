@@ -1,5 +1,5 @@
 import { HttpResponse } from '../protocols';
-import { ServerError } from '../errors/server-error';
+import { ServerError } from '../errors';
 
 export const ok = (data: any): HttpResponse => ({
   statusCode: 200,
