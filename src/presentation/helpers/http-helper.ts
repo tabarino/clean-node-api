@@ -1,9 +1,10 @@
 import { HttpResponse } from '../protocols';
 import { ServerError } from '../errors/server-error';
+import { AccountModel } from '../../domain/models/account';
 
-export const success = (): HttpResponse => ({
+export const success = (account: AccountModel): HttpResponse => ({
   statusCode: 200,
-  body: ''
+  body: account
 });
 
 export const badRequest = (error: Error): HttpResponse => ({
