@@ -11,8 +11,12 @@
 
 # js files
 *.js
-!jest.config.js
 !webpack.config.js
+
+# jest config files
+!jest-integration.config.js
+!jest-unit.config.js
+!jest.config.js
 
 # map files
 *.js.map
