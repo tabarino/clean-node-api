@@ -4,7 +4,8 @@ module.exports = {
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
     'index.ts',
-    'signup-protocols.ts'
+    'signup-protocols.ts',
+    'db-add-account-protocols.ts'
   ],
   testEnvironment: 'node',
   transform: {
