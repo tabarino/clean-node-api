@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/tabarino/clean-node-api#readme",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.1",
     "@types/validator": "^13.6.3",
@@ -36,6 +37,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "validator": "^13.6.0"
   }
 }
