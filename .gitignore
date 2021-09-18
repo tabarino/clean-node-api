@@ -17,6 +17,8 @@
 !jest-integration.config.js
 !jest-unit.config.js
 !jest.config.js
+!jest-mongodb-config.js
+globalConfig.json
 
 # map files
 *.js.map

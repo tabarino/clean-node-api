@@ -8,6 +8,7 @@ module.exports = {
     'db-add-account-protocols.ts'
   ],
   testEnvironment: 'node',
+  preset: '@shelf/jest-mongodb',
   transform: {
     '.+\\.ts$': 'ts-jest'
   }

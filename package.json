@@ -1,7 +1,7 @@
 {
   "name": "clean-node-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJs Api using Clean Architecture",
   "main": "index.js",
   "scripts": {
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/tabarino/clean-node-api#readme",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^2.0.3",
     "@types/bcrypt": "^5.0.0",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.1",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "mongodb": "^4.1.2",
     "validator": "^13.6.0"
   }
 }
