@@ -4,6 +4,7 @@
   "description": "NodeJs Api using Clean Architecture",
   "main": "index.js",
   "scripts": {
+    "start": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit.config.js",
     "test:integration": "npm test -- --watch -c jest-integration.config.js",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@shelf/jest-mongodb": "^2.0.3",
     "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.13",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.1",
     "@types/validator": "^13.6.3",
@@ -32,6 +34,7 @@
     "husky": "^7.0.1",
     "jest": "^27.0.6",
     "lint-staged": "^11.1.2",
+    "sucrase": "^3.20.1",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
     "ts-standard": "^10.0.0",
@@ -39,6 +42,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
     "mongodb": "^4.1.2",
     "validator": "^13.6.0"
   }
