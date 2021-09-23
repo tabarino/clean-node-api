@@ -5,7 +5,8 @@ module.exports = {
   coveragePathIgnorePatterns: [
     'index.ts',
     'signup-protocols.ts',
-    'db-add-account-protocols.ts'
+    'db-add-account-protocols.ts',
+    'server.ts'
   ],
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',
