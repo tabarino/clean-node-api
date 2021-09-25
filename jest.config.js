@@ -7,7 +7,8 @@ module.exports = {
     'signup-protocols.ts',
     'db-add-account-protocols.ts',
     'server.ts',
-    'env.ts'
+    'env.ts',
+    'factories'
   ],
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',
