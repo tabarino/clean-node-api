@@ -8,6 +8,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     'index.ts',
     'signup-protocols.ts',
+    'login-protocols.ts',
     'db-add-account-protocols.ts'
   ],
   testEnvironment: 'node',
