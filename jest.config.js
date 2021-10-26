@@ -7,8 +7,8 @@ module.exports = {
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
     'index.ts',
-    'signup-protocols.ts',
-    'login-protocols.ts',
+    'signup-controller-protocols.ts',
+    'login-controller-protocols.ts',
     'db-add-account-protocols.ts',
     'db-authentication-protocols.ts'
   ],
