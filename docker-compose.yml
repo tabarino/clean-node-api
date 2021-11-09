@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  app:
+    container_name: clean-node-api
+    image: clean-node-api
+    restart: always
+    build: .
+    command: npm start
+    depends_on:
+      - mongo
+    ports:
+      - 13000:3000
+    volumes:
+      - ./dist:/app/clean-node-api/dist
+    links:
+      - mongo
+  mongo:
+    container_name: mongo-clean-node-api
+    image: mongo:4
+    restart: always
+    ports:
+      - 27018:27017
+    volumes:
+      - mongo:/var/lib/mongodb
+volumes:
+  mongo:
+    driver: local
