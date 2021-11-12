@@ -5,11 +5,12 @@ services:
     image: clean-node-api
     restart: always
     build: .
-    command: npm start
+    command: npm run debug
     depends_on:
       - mongo
     ports:
       - 13000:3000
+      - 9222:9222
     volumes:
       - ./dist:/app/clean-node-api/dist
     links:
