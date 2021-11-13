@@ -12,7 +12,7 @@ services:
       - 13000:3000
       - 9222:9222
     volumes:
-      - ./dist:/app/clean-node-api/dist
+      - ./dist/:/app/clean-node-api/dist/
       - ./package.json:/app/clean-node-api/package.json
       - ./package-lock.json:/app/clean-node-api/package-lock.json
     links:
