@@ -19,7 +19,7 @@
 2. OK - Retorna erro **400** se name, email, password ou passwordConfirmation não forem fornecidos pelo client
 3. OK - Retorna erro **400** se password e passwordConfirmation não forem iguais
 4. OK - Retorna erro **400** se o campo email for um e-mail inválido
-5. Retorna erro **403** se o email fornecido já estiver em uso
+5. OK - Retorna erro **403** se o email fornecido já estiver em uso
 6. OK - Retorna erro **500** se der erro ao tentar gerar uma senha criptografada
 7. OK - Retorna erro **500** se der erro ao tentar criar a conta do usuário
 8. OK - Retorna erro **500** se der erro ao tentar gerar o token de acesso
