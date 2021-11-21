@@ -6,7 +6,7 @@
 2.  OK - Valida dados obrigatórios **name**, **email**, **password** e **passwordConfirmation**
 3.  OK - Valida que **password** e **passwordConfirmation** são iguais
 4.  OK - Valida que o campo **email** é um e-mail válido
-5.  **Valida** se já existe um usuário com o email fornecido
+5.  OK - **Valida** se já existe um usuário com o email fornecido
 6.  OK - Gera uma senha **criptografada** (essa senha não pode ser descriptografada)
 7.  OK - **Cria** uma conta para o usuário com os dados informados, **substituindo** a senha pela senha criptorafada
 8.  OK - Gera um **token** de acesso a partir do ID do usuário
