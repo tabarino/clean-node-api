@@ -9,6 +9,7 @@ module.exports = {
     'index.ts',
     'signup-controller-protocols.ts',
     'login-controller-protocols.ts',
+    'add-survey-controller-protocols.ts',
     'db-add-account-protocols.ts',
     'db-authentication-protocols.ts'
   ],
