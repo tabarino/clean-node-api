@@ -69,4 +69,43 @@ describe('Survey Routes', () => {
         .expect(204);
     });
   });
+
+  describe('GET /surveys', () => {
+    test('Should return 403 on load surveys without access token', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .expect(403);
+    });
+
+    // test('Should return 204 on add survey with valid access token', async () => {
+    //   const result = await accountCollection.insertOne({
+    //     name: 'Ivan',
+    //     email: 'tabarino@outlook.com',
+    //     password: '123',
+    //     role: 'admin'
+    //   });
+
+    //   const accountId = result.insertedId.toString();
+    //   const accessToken = sign({ accountId }, env.jwtSecret);
+    //   await accountCollection.updateOne({
+    //     _id: new ObjectId(accountId)
+    //   }, {
+    //     $set: {
+    //       accessToken
+    //     }
+    //   });
+
+    //   await request(app)
+    //     .post('/api/surveys')
+    //     .set('x-access-token', accessToken)
+    //     .send({
+    //       question: 'any_question',
+    //       answers: [
+    //         { image: 'http://image-name1.com', answer: 'any_answer' },
+    //         { image: 'http://image-name2.com', answer: 'any_answer2' }
+    //       ]
+    //     })
+    //     .expect(204);
+    // });
+  });
 });
