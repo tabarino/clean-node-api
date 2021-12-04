@@ -8,6 +8,27 @@ import env from '../config/env';
 let surveyCollection: Collection;
 let accountCollection: Collection;
 
+const makeAccessToken = async (): Promise<string> => {
+  const result = await accountCollection.insertOne({
+    name: 'Ivan',
+    email: 'tabarino@outlook.com',
+    password: '123',
+    role: 'admin'
+  });
+
+  const accountId = result.insertedId.toString();
+  const accessToken = sign({ accountId }, env.jwtSecret);
+  await accountCollection.updateOne({
+    _id: new ObjectId(accountId)
+  }, {
+    $set: {
+      accessToken
+    }
+  });
+
+  return accessToken;
+};
+
 describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL);
@@ -39,23 +60,7 @@ describe('Survey Routes', () => {
     });
 
     test('Should return 204 on add survey with valid access token', async () => {
-      const result = await accountCollection.insertOne({
-        name: 'Ivan',
-        email: 'tabarino@outlook.com',
-        password: '123',
-        role: 'admin'
-      });
-
-      const accountId = result.insertedId.toString();
-      const accessToken = sign({ accountId }, env.jwtSecret);
-      await accountCollection.updateOne({
-        _id: new ObjectId(accountId)
-      }, {
-        $set: {
-          accessToken
-        }
-      });
-
+      const accessToken = await makeAccessToken();
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -67,6 +72,32 @@ describe('Survey Routes', () => {
           ]
         })
         .expect(204);
+    });
+  });
+
+  describe('GET /surveys', () => {
+    test('Should return 403 on load surveys without access token', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .expect(403);
+    });
+
+    test('Should return 200 on load surveys with valid access token', async () => {
+      const accessToken = await makeAccessToken();
+
+      await surveyCollection.insertMany([{
+        question: 'any_question',
+        answers: [{
+          image: 'any_image',
+          answer: 'any_answer'
+        }],
+        date: new Date()
+      }]);
+
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(200);
     });
   });
 });
