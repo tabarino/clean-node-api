@@ -7,7 +7,7 @@
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc --project tsconfig.production.json",
     "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
-    "dev:up": "npm run build && docker-compose up -d",
+    "dev:start": "npm run build && docker-compose up -d",
     "dev:stop": "docker-compose stop",
     "dev:down": "docker-compose down",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
@@ -58,6 +58,6 @@
     "validator": "^13.7.0"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   }
 }

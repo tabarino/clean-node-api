@@ -2,7 +2,7 @@ version: "3.9"
 services:
   app:
     container_name: clean-node-api
-    image: node:14
+    image: node:16
     working_dir: /app/clean-node-api
     restart: always
     command: bash -c "npm install --production && npm run debug"
