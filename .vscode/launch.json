@@ -8,8 +8,8 @@
       "type": "node",
       "request": "attach",
       "name": "Docker: Attach to Node",
-      "remoteRoot": "app/clean-node-api",
-      "port": 9222,
+      "remoteRoot": "/app/clean-node-api",
+      "port": 9229,
       "restart": true
     }
   ]
