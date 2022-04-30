@@ -12,7 +12,8 @@ export const adaptMiddleware = (middleware: Middleware): RequestHandler => {
       next();
     } else {
       res.status(httpResponse.statusCode).json({
-        error: httpResponse.body.message
+        error: httpResponse.body.message,
+        stack: httpResponse.body.stack
       });
     }
   }
