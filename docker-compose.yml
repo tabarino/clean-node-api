@@ -6,6 +6,9 @@ services:
     working_dir: /app/clean-node-api
     restart: always
     command: bash -c "npm install && npm run debug"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/clean-node-api
+      - PORT=5050
     depends_on:
       - mongo
     ports:
