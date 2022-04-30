@@ -5,6 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Nodemon: Launch Express + TypeScript",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script",
+        "dev:start"
+      ],
+      "sourceMaps": true,
+      "port": 9229,
+    },
+    {
       "type": "node",
       "request": "attach",
       "name": "Docker: Attach to Node",

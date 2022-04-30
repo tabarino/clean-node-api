@@ -7,6 +7,7 @@ services:
     restart: always
     command: bash -c "npm install && npm run debug"
     environment:
+      - NODE_ENV=docker
       - MONGO_URL=mongodb://mongo:27017/clean-node-api
       - PORT=5050
     depends_on:
