@@ -11,13 +11,13 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData);
-    return await MongoHelper.map(accountData, result.insertedId.toString());
+    return MongoHelper.map(accountData, result.insertedId.toString());
   }
 
   async loadByEmail (email: string): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const account = await accountCollection.findOne({ email });
-    return account && await MongoHelper.map(account, account._id);
+    return account && MongoHelper.map(account, account._id);
   }
 
   async loadByToken (token: string, role?: string): Promise<AccountModel> {
@@ -30,7 +30,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
         role: 'admin'
       }]
     });
-    return account && await MongoHelper.map(account, account._id);
+    return account && MongoHelper.map(account, account._id);
   }
 
   async updateAccessToken (id: string, token: string): Promise<void> {

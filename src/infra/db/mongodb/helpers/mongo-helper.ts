@@ -21,8 +21,11 @@ export const MongoHelper = {
     return this.client.db().collection(name);
   },
 
-  async map (collection: any, id: string): Promise<any> {
-    const collectionWithId = { ...collection, id };
-    return await new Promise(resolve => resolve(collectionWithId));
+  map (data: any, id: string): any {
+    return { ...data, id };
+  },
+
+  mapCollection (collection: any[]): any[] {
+    return collection.map((c) => MongoHelper.map(c, c._id));
   }
 };

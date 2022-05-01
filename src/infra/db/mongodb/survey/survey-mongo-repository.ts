@@ -9,13 +9,14 @@ import { LoadSurveyByIdRepository } from '@/data/usecases/load-survey-by-id/db-l
 export class SurveyMongoRepository implements AddSurveyRepository, LoadSurveysRepository, LoadSurveyByIdRepository {
   async loadAll (): Promise<SurveyModel[]> {
     const surveyCollection = await MongoHelper.getCollection('surveys');
-    return await surveyCollection.find().toArray() as SurveyModel[];
+    const surveys = await surveyCollection.find().toArray();
+    return MongoHelper.mapCollection(surveys);
   }
 
   async loadById (id: string): Promise<SurveyModel> {
     const surveyCollection = await MongoHelper.getCollection('surveys');
-    const survey = await surveyCollection.findOne({ _id: new ObjectId(id) }) as SurveyModel;
-    return survey;
+    const survey = await surveyCollection.findOne({ _id: new ObjectId(id) });
+    return survey && MongoHelper.map(survey, survey._id);
   }
 
   async add (surveyData: AddSurveyModel): Promise<void> {
