@@ -1,13 +1,13 @@
 import { AccountModel, AddAccountParams, AddAccount, HttpRequest, Validation, Authentication, AuthenticationParams } from './signup-controller-protocols';
 import { MissingParamError, ServerError, EmailInUseError } from '@/presentation/errors';
 import { badRequest, ok, serverError, forbidden } from '@/presentation/helpers/http/http-helper';
-import { mockThrowError } from '@/domain/test-helpers';
+import { mockAccountModel, mockThrowError } from '@/domain/test-helpers';
 import { SignUpController } from './signup-controller';
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountParams): Promise<AccountModel> {
-      return await new Promise(resolve => resolve(makeFakeValidAccount()));
+      return await new Promise(resolve => resolve(mockAccountModel()));
     }
   }
   return new AddAccountStub();
@@ -50,13 +50,6 @@ const makeSut = (): SutTypes => {
     authenticationStub
   };
 };
-
-const makeFakeValidAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'valid_password'
-});
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {

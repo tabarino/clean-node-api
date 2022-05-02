@@ -1,31 +1,7 @@
-import { Decrypter, LoadAccountByTokenRepository, AccountModel } from './db-load-account-by-token-protocols';
-import { mockThrowError } from '@/domain/test-helpers';
+import { Decrypter, LoadAccountByTokenRepository } from './db-load-account-by-token-protocols';
+import { mockAccountModel, mockThrowError } from '@/domain/test-helpers';
+import { mockDecrypter, mockLoadAccountByTokenRepository } from '@/data/test-helpers';
 import { DbLoadAccountByToken } from './db-load-account-by-token';
-
-const makeFakeAccount = (): AccountModel => ({
-  id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@mail.com',
-  password: 'hashed_password'
-});
-
-const makeDecrypter = (): Decrypter => {
-  class DecrypterStub implements Decrypter {
-    async decrypt (token: string): Promise<string> {
-      return await new Promise(resolve => resolve('any_value'));
-    }
-  }
-  return new DecrypterStub();
-};
-
-const makeLoadAccountByTokenRepository = (): LoadAccountByTokenRepository => {
-  class LoadAccountByTokenRepositoryStub implements LoadAccountByTokenRepository {
-    async loadByToken (token: string, role?: string): Promise<AccountModel> {
-      return await new Promise(resolve => resolve(makeFakeAccount()));
-    }
-  }
-  return new LoadAccountByTokenRepositoryStub();
-};
 
 type SutTypes = {
   sut: DbLoadAccountByToken;
@@ -34,8 +10,8 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const decrypterStub = makeDecrypter();
-  const loadAccountByTokenRepositoryStub = makeLoadAccountByTokenRepository();
+  const decrypterStub = mockDecrypter();
+  const loadAccountByTokenRepositoryStub = mockLoadAccountByTokenRepository();
   const sut = new DbLoadAccountByToken(decrypterStub, loadAccountByTokenRepositoryStub);
   return { sut, decrypterStub, loadAccountByTokenRepositoryStub };
 };
@@ -86,6 +62,6 @@ describe('DbLoadAccountByToken Usecase', () => {
   test('Should return an Account on success', async () => {
     const { sut } = makeSut();
     const account = await sut.load('any_token', 'any_role');
-    expect(account).toEqual(makeFakeAccount());
+    expect(account).toEqual(mockAccountModel());
   });
 });
