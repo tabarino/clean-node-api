@@ -73,5 +73,11 @@
   },
   "include": [
     "src"
+  ],
+  "ts-node": {
+    "files": true
+  },
+  "files": [
+    "src/main/config/custom-modules.d.ts"
   ]
 }
