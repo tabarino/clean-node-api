@@ -41,9 +41,7 @@ describe('DbAuthentication UseCase', () => {
 
   test('Should throw if LoadAccountbyEmailRepository throws', async () => {
     const { sut, loadAccountbyEmailRepositoryStub } = makeSut();
-    jest.spyOn(loadAccountbyEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(
-      new Promise((resolve, reject) => reject(new Error()))
-    );
+    jest.spyOn(loadAccountbyEmailRepositoryStub, 'loadByEmail').mockImplementationOnce(mockThrowError);
     const promise = sut.auth(mockAuthentication());
     await expect(promise).rejects.toThrow();
   });
@@ -71,7 +69,7 @@ describe('DbAuthentication UseCase', () => {
 
   test('Should return null if HashComparer returns false', async () => {
     const { sut, hashComparerStub } = makeSut();
-    jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(new Promise(resolve => resolve(false)));
+    jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(Promise.resolve(false));
     const accessToken = await sut.auth(mockAuthentication());
     expect(accessToken).toBeNull();
   });
@@ -105,9 +103,7 @@ describe('DbAuthentication UseCase', () => {
 
   test('Should throw if UpdateAccessTokenRepository throws', async () => {
     const { sut, updateAccessTokenRepositoryStub } = makeSut();
-    jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken').mockReturnValueOnce(
-      new Promise((resolve, reject) => reject(new Error()))
-    );
+    jest.spyOn(updateAccessTokenRepositoryStub, 'updateAccessToken').mockImplementationOnce(mockThrowError);
     const promise = sut.auth(mockAuthentication());
     await expect(promise).rejects.toThrow();
   });
