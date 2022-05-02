@@ -1,31 +1,13 @@
 import MockDate from 'mockdate';
 import { LoadSurveys, SurveyModel } from './load-surveys-controller-protocols';
 import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper';
-import { mockThrowError } from '@/domain/test-helpers';
+import { mockSurveyModels, mockThrowError } from '@/domain/test-helpers';
 import { LoadSurveysController } from './load-surveys-controller';
-
-const makeFakeSurveys = (): SurveyModel[] => {
-  return [{
-    id: 'any_id',
-    question: 'any_question',
-    answers: [
-      { image: 'any_image', answer: 'any_answer' }
-    ],
-    date: new Date()
-  }, {
-    id: 'other_id',
-    question: 'other_question',
-    answers: [
-      { image: 'other_image', answer: 'other_answer' }
-    ],
-    date: new Date()
-  }]
-};
 
 const makeLoadSurveys = (): LoadSurveys => {
   class LoadSurveysStub implements LoadSurveys {
     async load (): Promise<SurveyModel[]> {
-      return await new Promise(resolve => resolve(makeFakeSurveys()));
+      return await new Promise(resolve => resolve(mockSurveyModels()));
     }
   }
   return new LoadSurveysStub();
@@ -75,6 +57,6 @@ describe('LoadSurveys Controller', () => {
   test('Should return 200 on success', async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle({});
-    expect(httpResponse).toEqual(ok(makeFakeSurveys()));
+    expect(httpResponse).toEqual(ok(mockSurveyModels()));
   });
 });

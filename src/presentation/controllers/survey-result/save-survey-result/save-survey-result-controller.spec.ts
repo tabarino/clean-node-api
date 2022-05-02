@@ -1,4 +1,7 @@
 import MockDate from 'mockdate';
+import { mockSurveyModel, mockThrowError } from '@/domain/test-helpers';
+import { ok, forbidden, serverError, badRequest } from '@/presentation/helpers/http/http-helper';
+import { InvalidParamError } from '@/presentation/errors';
 import {
   SurveyModel,
   SurveyResultModel,
@@ -8,9 +11,6 @@ import {
   Validation,
   LoadSurveyById
 } from './save-survey-result-controller-protocols';
-import { ok, forbidden, serverError, badRequest } from '@/presentation/helpers/http/http-helper';
-import { InvalidParamError } from '@/presentation/errors';
-import { mockThrowError } from '@/domain/test-helpers';
 import { SaveSurveyResultController } from './save-survey-result-controller';
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -21,15 +21,6 @@ const makeFakeRequest = (): HttpRequest => ({
     answer: 'any_answer'
   },
   accountId: 'any_account_id'
-});
-
-const makeFakeSurvey = (): SurveyModel => ({
-  id: 'any_id',
-  question: 'any_question',
-  answers: [
-    { image: 'any_image', answer: 'any_answer' }
-  ],
-  date: new Date()
 });
 
 const makeFakeSurveyResult = (): SurveyResultModel => ({
@@ -43,7 +34,7 @@ const makeFakeSurveyResult = (): SurveyResultModel => ({
 const makeLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById (id: string): Promise<SurveyModel> {
-      return Promise.resolve(makeFakeSurvey());
+      return Promise.resolve(mockSurveyModel());
     }
   }
   return new LoadSurveyByIdStub();
