@@ -3,7 +3,7 @@ import {
   SurveyModel,
   SurveyResultModel,
   SaveSurveyResult,
-  SaveSurveyResultModel,
+  SaveSurveyResultParams,
   HttpRequest,
   Validation,
   LoadSurveyById
@@ -59,7 +59,7 @@ const makeValidation = (): Validation => {
 
 const makeSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
-    async save (data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save (data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return Promise.resolve(makeFakeSurveyResult());
     }
   }
