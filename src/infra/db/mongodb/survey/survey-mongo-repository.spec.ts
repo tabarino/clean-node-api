@@ -1,5 +1,6 @@
 import { Collection } from 'mongodb';
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
+import { mockAddSurveyParams } from '@/domain/test-helpers';
 import { SurveyMongoRepository } from './survey-mongo-repository';
 
 let surveyCollection: Collection;
@@ -74,14 +75,7 @@ describe('Survey Mongo Repository', () => {
 
   describe('Load By Id Surveys', () => {
     test('Should load survey by on success', async () => {
-      const result = await surveyCollection.insertOne({
-        question: 'any_question',
-        answers: [{
-          image: 'any_image',
-          answer: 'any_answer'
-        }],
-        date: new Date()
-      });
+      const result = await surveyCollection.insertOne(mockAddSurveyParams());
       const surveyId = result.insertedId.toString();
       const sut = makeSut();
       const survey = await sut.loadById(surveyId);
