@@ -14,7 +14,12 @@ module.exports = {
     'db-authentication-protocols.ts',
     'db-add-survey-protocols.ts',
     'auth-middleware-protocols.ts',
-    'load-surveys-controller-protocols.ts'
+    'load-surveys-controller-protocols.ts',
+    'db-load-account-by-token-protocols.ts',
+    'db-save-survey-result-protocols.ts',
+    'db-load-survey-by-id-protocols.ts',
+    'db-load-surveys-protocols.ts',
+    'save-survey-result-controller-protocols.ts'
   ],
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',
