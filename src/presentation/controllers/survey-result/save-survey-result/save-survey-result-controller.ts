@@ -1,4 +1,6 @@
 import { SaveSurveyResult, Controller, HttpRequest, HttpResponse, Validation, LoadSurveyById } from './save-survey-result-controller-protocols';
+import { forbidden } from '@/presentation/helpers/http/http-helper';
+import { InvalidParamError } from '@/presentation/errors';
 
 export class SaveSurveyResultController implements Controller {
   constructor (
@@ -14,7 +16,10 @@ export class SaveSurveyResultController implements Controller {
     //   return badRequest(error);
     // }
 
-    await this.loadSurveyById.loadById(httpRequest.params.surveyId);
+    const survey = await this.loadSurveyById.loadById(httpRequest.params.surveyId);
+    if (!survey) {
+      return forbidden(new InvalidParamError('surveyId'));
+    }
 
     // const { surveyId, accountId, answer } = httpRequest.body;
     // await this.saveSurveyResult.save({
