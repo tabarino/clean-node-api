@@ -60,6 +60,7 @@ describe('Survey Mongo Repository', () => {
       const sut = makeSut();
       const surveys = await sut.loadAll();
       expect(surveys.length).toBe(2);
+      expect(surveys[0].id).toBeTruthy();
       expect(surveys[0].question).toBe('any_question');
       expect(surveys[1].question).toBe('other_question');
     });
@@ -68,6 +69,24 @@ describe('Survey Mongo Repository', () => {
       const sut = makeSut();
       const surveys = await sut.loadAll();
       expect(surveys.length).toBe(0);
+    });
+  });
+
+  describe('Load By Id Surveys', () => {
+    test('Should load survey by on success', async () => {
+      const result = await surveyCollection.insertOne({
+        question: 'any_question',
+        answers: [{
+          image: 'any_image',
+          answer: 'any_answer'
+        }],
+        date: new Date()
+      });
+      const surveyId = result.insertedId.toString();
+      const sut = makeSut();
+      const survey = await sut.loadById(surveyId);
+      expect(survey).toBeTruthy();
+      expect(survey.id).toBeTruthy();
     });
   });
 });

@@ -3,7 +3,7 @@ import { AddAccountRepository } from '@/data/protocols/db/account/add-account-re
 import { LoadAccountbyEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository';
 import { UpdateAccessTokenRepository } from '@/data/protocols/db/account/update-access-token-repository';
 import { AccountModel } from '@/domain/models/account';
-import { AddAccountModel } from '@/domain/usecases/add-account';
+import { AddAccountModel } from '@/domain/usecases/account/add-account';
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper';
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository';
 
@@ -11,13 +11,13 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
   async add (accountData: AddAccountModel): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData);
-    return await MongoHelper.map(accountData, result.insertedId.toString());
+    return MongoHelper.map(accountData, result.insertedId.toString());
   }
 
   async loadByEmail (email: string): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const account = await accountCollection.findOne({ email });
-    return account && await MongoHelper.map(account, account._id);
+    return account && MongoHelper.map(account, account._id);
   }
 
   async loadByToken (token: string, role?: string): Promise<AccountModel> {
@@ -30,7 +30,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
         role: 'admin'
       }]
     });
-    return account && await MongoHelper.map(account, account._id);
+    return account && MongoHelper.map(account, account._id);
   }
 
   async updateAccessToken (id: string, token: string): Promise<void> {

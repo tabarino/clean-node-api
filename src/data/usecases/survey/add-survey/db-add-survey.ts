@@ -1,5 +1,4 @@
-import { AddSurvey, AddSurveyModel } from '@/domain/usecases/add-survey';
-import { AddSurveyRepository } from './db-add-survey-protocols';
+import { AddSurvey, AddSurveyModel, AddSurveyRepository } from './db-add-survey-protocols';
 
 export class DbAddSurvey implements AddSurvey {
   constructor (private readonly addSurveyRepository: AddSurveyRepository) { }
