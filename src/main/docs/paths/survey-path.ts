@@ -1,4 +1,4 @@
-export const surveysPath = {
+export const surveyPath = {
   get: {
     security: [{
       apiKeyAuth: [] as any[]

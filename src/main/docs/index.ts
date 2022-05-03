@@ -4,12 +4,14 @@ import {
   apiKeyAuthSchema,
   errorSchema,
   loginParamsSchema,
+  saveSurveyResultParamsSchema,
   signUpParamsSchema,
   surveyAnswerSchema,
   surveySchema,
-  surveysSchema
+  surveysSchema,
+  surveyResultSchema
 } from './schemas';
-import { loginPath, signUpPath, surveysPath } from './paths';
+import { loginPath, signUpPath, surveyPath, surveyResultPath } from './paths';
 import { badRequestComponent, forbiddenComponent, notFoundComponent, serverErrorComponent, unauthorisedComponent } from './components';
 
 export default {
@@ -27,6 +29,8 @@ export default {
     url: '/api'
   }],
   tags: [{
+    name: 'SignUp'
+  }, {
     name: 'Login'
   }, {
     name: 'Surveys'
@@ -34,7 +38,8 @@ export default {
   paths: {
     '/login': loginPath,
     '/signup': signUpPath,
-    '/surveys': surveysPath
+    '/surveys': surveyPath,
+    '/surveys/{surveyId}/results': surveyResultPath
   },
   schemas: {
     error: errorSchema,
@@ -44,7 +49,9 @@ export default {
     survey: surveySchema,
     surveys: surveysSchema,
     surveyAnswer: surveyAnswerSchema,
-    addSurveyParams: addSurveyParamsSchema
+    addSurveyParams: addSurveyParamsSchema,
+    saveSurveyResultParams: saveSurveyResultParamsSchema,
+    surveyResult: surveyResultSchema
   },
   components: {
     securitySchemes: {
