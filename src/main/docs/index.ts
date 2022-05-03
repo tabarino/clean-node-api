@@ -1,6 +1,6 @@
-import { badRequestComponent, notFoundComponent, serverErrorComponent, unauthorisedComponent } from './components';
-import { accountSchema, errorSchema, loginParamsSchema } from './schemas';
-import { loginPath } from './paths';
+import { badRequestComponent, forbiddenComponent, notFoundComponent, serverErrorComponent, unauthorisedComponent } from './components';
+import { accountSchema, apiKeyAuthSchema, errorSchema, loginParamsSchema, surveyAnswerSchema, surveySchema, surveysSchema } from './schemas';
+import { loginPath, surveysPath } from './paths';
 
 export default {
   openapi: '3.0.0',
@@ -18,17 +18,27 @@ export default {
   }],
   tags: [{
     name: 'Login'
+  }, {
+    name: 'Surveys'
   }],
   paths: {
-    '/login': loginPath
+    '/login': loginPath,
+    '/surveys': surveysPath
   },
   schemas: {
     error: errorSchema,
     account: accountSchema,
-    loginParams: loginParamsSchema
+    loginParams: loginParamsSchema,
+    survey: surveySchema,
+    surveys: surveysSchema,
+    surveyAnswer: surveyAnswerSchema
   },
   components: {
+    securitySchemes: {
+      apiKeyAuth: apiKeyAuthSchema
+    },
     badRequest: badRequestComponent,
+    forbidden: forbiddenComponent,
     notFound: notFoundComponent,
     serverError: serverErrorComponent,
     unauthorised: unauthorisedComponent
