@@ -9,4 +9,4 @@ export const loginParamsSchema = {
     }
   },
   required: ['email', 'password']
-}
+};

@@ -1,7 +1,7 @@
-export const accountSchema = {
+export const errorSchema = {
   type: 'object',
   properties: {
-    accessToken: {
+    error: {
       type: 'string'
     }
   }

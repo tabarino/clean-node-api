@@ -1,6 +1,6 @@
-import { loginPath } from './paths/login-path';
-import { accountSchema } from './schemas/account-schema';
-import { loginParamsSchema } from './schemas/login-params-schema';
+import { badRequestComponent, notFoundComponent, serverErrorComponent, unauthorisedComponent } from './components';
+import { accountSchema, errorSchema, loginParamsSchema } from './schemas';
+import { loginPath } from './paths';
 
 export default {
   openapi: '3.0.0',
@@ -8,6 +8,10 @@ export default {
     title: 'Clean Node API',
     description: 'API Documentation - Clean Node API',
     version: '1.0.0'
+  },
+  license: {
+    name: 'GPL-3.0-or-later',
+    url: 'https://spdx.org/licenses/GPL-3.0-or-later.html'
   },
   servers: [{
     url: '/api'
@@ -19,7 +23,14 @@ export default {
     '/login': loginPath
   },
   schemas: {
+    error: errorSchema,
     account: accountSchema,
     loginParams: loginParamsSchema
+  },
+  components: {
+    badRequest: badRequestComponent,
+    notFound: notFoundComponent,
+    serverError: serverErrorComponent,
+    unauthorised: unauthorisedComponent
   }
 }
