@@ -1,6 +1,15 @@
+import {
+  accountSchema,
+  apiKeyAuthSchema,
+  errorSchema,
+  loginParamsSchema,
+  signUpParamsSchema,
+  surveyAnswerSchema,
+  surveySchema,
+  surveysSchema
+} from './schemas';
+import { loginPath, signUpPath, surveysPath } from './paths';
 import { badRequestComponent, forbiddenComponent, notFoundComponent, serverErrorComponent, unauthorisedComponent } from './components';
-import { accountSchema, apiKeyAuthSchema, errorSchema, loginParamsSchema, surveyAnswerSchema, surveySchema, surveysSchema } from './schemas';
-import { loginPath, surveysPath } from './paths';
 
 export default {
   openapi: '3.0.0',
@@ -23,12 +32,14 @@ export default {
   }],
   paths: {
     '/login': loginPath,
+    '/signup': signUpPath,
     '/surveys': surveysPath
   },
   schemas: {
     error: errorSchema,
     account: accountSchema,
     loginParams: loginParamsSchema,
+    signUpParams: signUpParamsSchema,
     survey: surveySchema,
     surveys: surveysSchema,
     surveyAnswer: surveyAnswerSchema
