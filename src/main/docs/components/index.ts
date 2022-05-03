@@ -1,3 +1,4 @@
+export * from './api-key-auth-component';
 export * from './bad-request-component';
 export * from './forbidden-component';
 export * from './not-found-component';
