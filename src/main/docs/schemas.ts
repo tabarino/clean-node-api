@@ -10,6 +10,7 @@ import {
   surveysSchema,
   surveyResultSchema
 } from './schemas/';
+import { surveyResultAnswerSchema } from './schemas/survey-result-answer-schema';
 
 export default {
   error: errorSchema,
@@ -21,5 +22,6 @@ export default {
   surveyAnswer: surveyAnswerSchema,
   addSurveyParams: addSurveyParamsSchema,
   saveSurveyResultParams: saveSurveyResultParamsSchema,
-  surveyResult: surveyResultSchema
+  surveyResult: surveyResultSchema,
+  surveyResultAnswer: surveyResultAnswerSchema
 };

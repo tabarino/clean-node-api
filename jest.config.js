@@ -20,6 +20,8 @@ module.exports = {
     'db-save-survey-result-protocols.ts',
     'db-load-survey-by-id-protocols.ts',
     'db-load-surveys-protocols.ts',
+    'db-load-survey-result-protocols.ts',
+    'load-survey-result-controller-protocols.ts',
     'save-survey-result-controller-protocols.ts'
   ],
   testEnvironment: 'node',
