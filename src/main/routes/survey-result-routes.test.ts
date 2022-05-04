@@ -79,4 +79,32 @@ describe('Survey Result Routes', () => {
         .expect(200);
     });
   });
+
+  describe('GET /surveys/:surveyId/results', () => {
+    test('Should return 403 on load survey result without access token', async () => {
+      await request(app)
+        .get('/api/surveys/any_id/results')
+        .expect(403);
+    });
+
+    test('Should return 200 on load survey result with valid access token', async () => {
+      const survey = {
+        question: 'Question',
+        answers: [{
+          image: 'http://image.com',
+          answer: 'Answer 1'
+        }, {
+          answer: 'Answer 2'
+        }],
+        date: new Date()
+      };
+      const result = await surveyCollection.insertOne(survey);
+      const surveyId = result.insertedId.toString();
+      const accessToken = await makeAccessToken();
+      await request(app)
+        .get(`/api/surveys/${surveyId}/results`)
+        .set('x-access-token', accessToken)
+        .expect(200);
+    });
+  });
 });
