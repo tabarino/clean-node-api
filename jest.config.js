@@ -8,6 +8,7 @@ module.exports = {
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: [
     'index.ts',
+    'query-builder.ts',
     'signup-controller-protocols.ts',
     'login-controller-protocols.ts',
     'add-survey-controller-protocols.ts',
@@ -20,6 +21,7 @@ module.exports = {
     'db-save-survey-result-protocols.ts',
     'db-load-survey-by-id-protocols.ts',
     'db-load-surveys-protocols.ts',
+    'db-load-survey-result-protocols.ts',
     'save-survey-result-controller-protocols.ts'
   ],
   testEnvironment: 'node',
