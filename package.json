@@ -4,9 +4,10 @@
   "description": "NodeJs Api using Clean Architecture",
   "main": "index.js",
   "scripts": {
+    "build": "rimraf dist && tsc --project tsconfig.production.json",
     "start": "node dist/main/server.js",
     "dev:start": "nodemon",
-    "prod:build": "rimraf dist && tsc --project tsconfig.production.json",
+    "prod:build": "npm build",
     "prod:start": "npm run prod:build && docker-compose -f docker-compose.production.yml up -d",
     "docker:build": "rimraf dist && tsc",
     "docker:start": "npm run docker:build && docker-compose up -d",
