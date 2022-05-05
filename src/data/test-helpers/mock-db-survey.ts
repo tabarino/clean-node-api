@@ -5,14 +5,28 @@ import { LoadSurveysRepository } from '@/data/protocols/db/survey/load-surveys-r
 import { LoadSurveyByIdRepository } from '@/data/protocols/db/survey/load-survey-by-id-repository';
 import { AddSurveyRepository } from '@/data/protocols/db/survey/add-survey-repository';
 
-export const mockLoadSurveysRepository = (): LoadSurveysRepository => {
-  class LoadSurveysRepositoryStub implements LoadSurveysRepository {
-    async loadAll (): Promise<SurveyModel[]> {
-      return await Promise.resolve(mockSurveyModels());
-    }
+// export const mockLoadSurveysRepository = (): LoadSurveysRepository => {
+//   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
+//     async loadAll (accountId: string): Promise<SurveyModel[]> {
+//       return await Promise.resolve(mockSurveyModels());
+//     }
+//   }
+//   return new LoadSurveysRepositoryStub();
+// };
+
+export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
+  // Use the callsCount when the function has no parameters
+  // In this case I left here only as example
+  callsCount = 0;
+  accountId: string;
+  surveyModels = mockSurveyModels();
+
+  async loadAll (accountId: string): Promise<SurveyModel[]> {
+    this.callsCount++;
+    this.accountId = accountId;
+    return Promise.resolve(this.surveyModels);
   }
-  return new LoadSurveysRepositoryStub();
-};
+}
 
 export const mockLoadSurveyByIdRepository = (): LoadSurveyByIdRepository => {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
