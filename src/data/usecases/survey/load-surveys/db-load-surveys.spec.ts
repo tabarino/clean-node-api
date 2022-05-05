@@ -1,18 +1,18 @@
 import MockDate from 'mockdate';
+import faker from '@faker-js/faker';
 import { mockSurveyModels, mockThrowError } from '@/domain/test-helpers';
-import { mockLoadSurveysRepository } from '@/data/test-helpers';
-import { LoadSurveysRepository } from './db-load-surveys-protocols';
+import { LoadSurveysRepositorySpy } from '@/data/test-helpers';
 import { DbLoadSurveys } from './db-load-surveys';
 
 type SutTypes = {
   sut: DbLoadSurveys;
-  loadSurveysRepositoryStub: LoadSurveysRepository;
+  loadSurveysRepositorySpy: LoadSurveysRepositorySpy;
 }
 
 const makeSut = (): SutTypes => {
-  const loadSurveysRepositoryStub = mockLoadSurveysRepository();
-  const sut = new DbLoadSurveys(loadSurveysRepositoryStub);
-  return { sut, loadSurveysRepositoryStub };
+  const loadSurveysRepositorySpy = new LoadSurveysRepositorySpy();
+  const sut = new DbLoadSurveys(loadSurveysRepositorySpy);
+  return { sut, loadSurveysRepositorySpy };
 };
 
 describe('DbLoadSurveys', () => {
@@ -24,23 +24,24 @@ describe('DbLoadSurveys', () => {
     MockDate.reset();
   });
 
-  test('Should call LoadSurveysRepository', async () => {
-    const { sut, loadSurveysRepositoryStub } = makeSut();
-    const loadAllSpy = jest.spyOn(loadSurveysRepositoryStub, 'loadAll');
-    await sut.load();
-    expect(loadAllSpy).toHaveBeenCalled();
+  test('Should call LoadSurveysRepository with correct values', async () => {
+    const { sut, loadSurveysRepositorySpy } = makeSut();
+    const accountId = faker.datatype.uuid();
+    await sut.load(accountId);
+    expect(loadSurveysRepositorySpy.accountId).toBe(accountId);
+    expect(loadSurveysRepositorySpy.callsCount).toBe(1);
   });
 
   test('Should throw if LoadSurveysRepository throws', async () => {
-    const { sut, loadSurveysRepositoryStub } = makeSut();
-    jest.spyOn(loadSurveysRepositoryStub, 'loadAll').mockImplementationOnce(mockThrowError);
-    const promise = sut.load();
+    const { sut, loadSurveysRepositorySpy } = makeSut();
+    jest.spyOn(loadSurveysRepositorySpy, 'loadAll').mockImplementationOnce(mockThrowError);
+    const promise = sut.load(faker.datatype.uuid());
     await expect(promise).rejects.toThrow();
   });
 
   test('Should return a list of Surveys on success', async () => {
     const { sut } = makeSut();
-    const surveys = await sut.load();
+    const surveys = await sut.load(faker.datatype.uuid());
     expect(surveys).toEqual(mockSurveyModels());
   });
 });
