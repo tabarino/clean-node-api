@@ -7,6 +7,9 @@ export const surveySchema = {
     question: {
       type: 'string'
     },
+    didAnswer: {
+      type: 'boolean'
+    },
     answers: {
       type: 'array',
       items: {
