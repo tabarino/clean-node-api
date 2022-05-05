@@ -3,3 +3,5 @@ declare module Express {
     accountId?: string;
   }
 }
+
+declare module 'mongo-round';

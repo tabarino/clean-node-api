@@ -115,6 +115,8 @@ describe('Survey Result Mongo Repository', () => {
       const sut = makeSut();
       const survey = await mockSurvey();
       const account = await mockAccount();
+      const account2 = await mockAccount();
+      const account3 = await mockAccount();
       await surveyResultCollection.insertMany([{
         surveyId: new ObjectId(survey.id),
         accountId: new ObjectId(account.id),
@@ -127,30 +129,34 @@ describe('Survey Result Mongo Repository', () => {
         date: new Date()
       }, {
         surveyId: new ObjectId(survey.id),
-        accountId: new ObjectId(account.id),
+        accountId: new ObjectId(account2.id),
         answer: survey.answers[1].answer,
         date: new Date()
       }, {
         surveyId: new ObjectId(survey.id),
-        accountId: new ObjectId(account.id),
+        accountId: new ObjectId(account3.id),
         answer: survey.answers[1].answer,
         date: new Date()
       }]);
-      const surveyResult = await sut.loadBySurveyId(survey.id);
+      const surveyResult = await sut.loadBySurveyId(survey.id, account.id);
       expect(surveyResult).toBeTruthy();
       expect(surveyResult.surveyId.toString()).toEqual(survey.id);
       expect(surveyResult.answers[0].count).toBe(2);
       expect(surveyResult.answers[0].percent).toBe(50);
+      expect(surveyResult.answers[0].isCurrentAccountAnswer).toBe(true);
       expect(surveyResult.answers[1].count).toBe(2);
       expect(surveyResult.answers[1].percent).toBe(50);
+      expect(surveyResult.answers[1].isCurrentAccountAnswer).toBe(false);
       expect(surveyResult.answers[2].count).toBe(0);
       expect(surveyResult.answers[2].percent).toBe(0);
+      expect(surveyResult.answers[2].isCurrentAccountAnswer).toBe(false);
     });
 
     test('Should return null if load survey result aggregate returns null', async () => {
       const sut = makeSut();
       const survey = await mockSurvey();
-      const surveyResult = await sut.loadBySurveyId(survey.id);
+      const account = await mockAccount();
+      const surveyResult = await sut.loadBySurveyId(survey.id, account.id);
       expect(surveyResult).toBeNull();
     });
   });
