@@ -1,15 +1,12 @@
 import faker from '@faker-js/faker';
 import { AccessDeniedError } from '@/presentation/errors';
 import { forbidden, ok, serverError } from '@/presentation/helpers';
-import { HttpRequest } from '@/presentation/protocols';
 import { AuthMiddleware } from '@/presentation/middlewares';
 import { mockThrowError } from '@/tests/domain/mocks';
 import { LoadAccountByTokenSpy } from '@/tests/presentation/mocks';
 
-const mockRequest = (): HttpRequest => ({
-  headers: {
-    'x-access-token': faker.random.alpha(32)
-  }
+const mockRequest = (): AuthMiddleware.Request => ({
+  accessToken: faker.random.alpha(32)
 });
 
 type SutTypes = {
@@ -33,9 +30,9 @@ describe('Auth Middleware', () => {
   test('Should call LoadAccountByToken with correct accessToken', async () => {
     const role = faker.random.word();
     const { sut, loadAccountByTokenSpy } = makeSut(role);
-    const httpRequest = mockRequest();
-    await sut.handle(httpRequest);
-    expect(loadAccountByTokenSpy.accessToken).toBe(httpRequest.headers['x-access-token']);
+    const request = mockRequest();
+    await sut.handle(request);
+    expect(loadAccountByTokenSpy.accessToken).toBe(request.accessToken);
     expect(loadAccountByTokenSpy.role).toBe(role);
   });
 

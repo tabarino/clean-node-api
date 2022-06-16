@@ -1,7 +1,15 @@
 import { LoadSurveyById, SaveSurveyResult } from '@/domain/usecases';
-import { Controller, HttpRequest, HttpResponse, Validation } from '@/presentation/protocols';
+import { Controller, HttpResponse, Validation } from '@/presentation/protocols';
 import { ok, forbidden, serverError, badRequest } from '@/presentation/helpers';
 import { InvalidParamError } from '@/presentation/errors';
+
+export namespace SaveSurveyResultController {
+  export type Request = {
+    surveyId: string;
+    accountId: string;
+    answer: string;
+  }
+}
 
 export class SaveSurveyResultController implements Controller {
   constructor (
@@ -10,13 +18,11 @@ export class SaveSurveyResultController implements Controller {
     private readonly saveSurveyResult: SaveSurveyResult
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+  async handle (request: SaveSurveyResultController.Request): Promise<HttpResponse> {
     try {
-      const { accountId } = httpRequest;
-      const { surveyId } = httpRequest.params;
-      const { answer } = httpRequest.body;
+      const { accountId, surveyId, answer } = request;
 
-      const error = this.validation.validate(httpRequest.body);
+      const error = this.validation.validate(request);
       if (error) {
         return badRequest(error);
       }
