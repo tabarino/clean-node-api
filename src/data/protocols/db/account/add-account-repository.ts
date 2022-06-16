@@ -1,6 +1,11 @@
+import { AddAccount } from '@/domain/usecases';
 import { AccountModel } from '@/domain/models';
-import { AddAccountParams } from '@/domain/usecases';
+
+export namespace AddAccountRepository {
+  export type Params = AddAccount.Params;
+  export type Result = AccountModel;
+}
 
 export interface AddAccountRepository {
-  add (accountData: AddAccountParams): Promise<AccountModel>;
+  add (accountData: AddAccountRepository.Params): Promise<AddAccountRepository.Result>;
 }

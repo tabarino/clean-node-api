@@ -1,15 +1,15 @@
 import { faker } from '@faker-js/faker';
 import { mockAccountModel } from '@/tests/domain/mocks';
 import { AccountModel, AuthenticationModel } from '@/domain/models';
-import { AddAccount, AddAccountParams, LoadAccountByToken, Authentication, AuthenticationParams } from '@/domain/usecases';
+import { AddAccount, LoadAccountByToken, Authentication, AuthenticationParams } from '@/domain/usecases';
 
 export class AddAccountSpy implements AddAccount {
-  accountModel = mockAccountModel();
-  addAccountParams: AddAccountParams;
+  isValid = true;
+  addAccountParams: AddAccount.Params;
 
-  async add (account: AddAccountParams): Promise<AccountModel> {
+  async add (account: AddAccount.Params): Promise<boolean> {
     this.addAccountParams = account;
-    return Promise.resolve(this.accountModel);
+    return Promise.resolve(this.isValid);
   }
 }
 
