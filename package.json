@@ -21,7 +21,7 @@
     "test:integration": "npm test -- --watch -c jest-integration.config.js",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": "npm test -- --coverage"
+    "test:coverage": "npm test -- --coverage"
   },
   "repository": {
     "type": "git",

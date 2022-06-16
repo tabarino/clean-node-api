@@ -4,8 +4,6 @@
     "sourceMap": false
   },
   "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/test-helpers/**"
+    "tests"
   ]
 }
