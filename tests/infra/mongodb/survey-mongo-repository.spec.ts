@@ -1,5 +1,4 @@
 import { Collection, ObjectId } from 'mongodb';
-import { AccountModel } from '@/domain/models';
 import { MongoHelper, SurveyMongoRepository } from '@/infra/db/mongodb';
 import { mockAddSurveyParams } from '@/tests/domain/mocks';
 
@@ -7,18 +6,14 @@ let surveyCollection: Collection;
 let surveyResultCollection: Collection;
 let accountCollection: Collection;
 
-const mockAccount = async (): Promise<AccountModel> => {
+const mockAccountId = async (): Promise<string> => {
   const account = {
     name: 'any_name',
     email: 'any_email@mail.com',
     password: 'any_password'
   };
   const result = await accountCollection.insertOne(account);
-  const accountId = result.insertedId.toString();
-  return {
-    ...account,
-    id: accountId
-  };
+  return result.insertedId.toString();
 };
 
 const makeSut = (): SurveyMongoRepository => {
@@ -81,14 +76,14 @@ describe('Survey Mongo Repository', () => {
       const surveyId = result.insertedIds[0].toString();
       const surveyResult = await surveyCollection.findOne({ _id: new ObjectId(surveyId) });
       const sut = makeSut();
-      const account = await mockAccount();
+      const accountId = await mockAccountId();
       await surveyResultCollection.insertOne({
         surveyId: new ObjectId(surveyId),
-        accountId: new ObjectId(account.id),
+        accountId: new ObjectId(accountId),
         answer: surveyResult.answers[0].answer,
         date: new Date()
       });
-      const surveys = await sut.loadAll(account.id);
+      const surveys = await sut.loadAll(accountId);
       expect(surveys.length).toBe(2);
       expect(surveys[0].id).toBeTruthy();
       expect(surveys[0].question).toBe('any_question');
@@ -98,9 +93,9 @@ describe('Survey Mongo Repository', () => {
     });
 
     test('Should load empty list', async () => {
-      const account = await mockAccount();
+      const accountId = await mockAccountId();
       const sut = makeSut();
-      const surveys = await sut.loadAll(account.id);
+      const surveys = await sut.loadAll(accountId);
       expect(surveys.length).toBe(0);
     });
   });

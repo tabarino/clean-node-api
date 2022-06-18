@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb';
-import { AccountModel } from '@/domain/models';
 import { LoadAccountbyEmailRepository, LoadAccountByTokenRepository, AddAccountRepository, UpdateAccessTokenRepository } from '@/data/protocols';
 import { MongoHelper } from '@/infra/db/mongodb';
 
@@ -7,10 +6,10 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
   async add (accountData: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData);
-    return MongoHelper.map(accountData, result.insertedId.toString());
+    return result.insertedId !== null;
   }
 
-  async loadByEmail (email: string): Promise<AccountModel> {
+  async loadByEmail (email: string): Promise<LoadAccountbyEmailRepository.Result> {
     const accountCollection = await MongoHelper.getCollection('accounts');
     const account = await accountCollection.findOne({ email });
     return account && MongoHelper.map(account, account._id.toString());
