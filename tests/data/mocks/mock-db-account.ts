@@ -1,4 +1,10 @@
-import { AddAccountRepository, LoadAccountbyEmailRepository, LoadAccountByTokenRepository, UpdateAccessTokenRepository } from '@/data/protocols';
+import {
+  AddAccountRepository,
+  CheckAccountByEmailRepository,
+  LoadAccountByEmailRepository,
+  LoadAccountByTokenRepository,
+  UpdateAccessTokenRepository
+} from '@/data/protocols';
 import { mockAccountModel } from '@/tests/domain/mocks';
 
 export class AddAccountRepositorySpy implements AddAccountRepository {
@@ -11,11 +17,21 @@ export class AddAccountRepositorySpy implements AddAccountRepository {
   }
 }
 
-export class LoadAccountByEmailRepositorySpy implements LoadAccountbyEmailRepository {
+export class CheckAccountByEmailRepositorySpy implements CheckAccountByEmailRepository {
+  hasAccount = false;
+  email: string;
+
+  async checkByEmail (email: string): Promise<boolean> {
+    this.email = email;
+    return Promise.resolve(this.hasAccount);
+  }
+}
+
+export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
   accountModel = mockAccountModel();
   email: string;
 
-  async loadByEmail (email: string): Promise<LoadAccountbyEmailRepository.Result> {
+  async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result> {
     this.email = email;
     return Promise.resolve(this.accountModel);
   }

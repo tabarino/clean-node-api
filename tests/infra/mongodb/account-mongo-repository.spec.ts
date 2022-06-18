@@ -32,6 +32,22 @@ describe('Account Mongo Repository', () => {
     });
   });
 
+  describe('Check by Email', () => {
+    test('Should return true if checkByEmail is valid', async () => {
+      const sut = makeSut();
+      const addAccountParams = mockAddAccountParams();
+      await accountCollection.insertOne(addAccountParams);
+      const hasAccount = await sut.checkByEmail(addAccountParams.email);
+      expect(hasAccount).toBe(true);
+    });
+
+    test('Should return false if checkByEmail is not valid', async () => {
+      const sut = makeSut();
+      const hasAccount = await sut.checkByEmail(faker.internet.email());
+      expect(hasAccount).toBe(false);
+    });
+  });
+
   describe('Load by Email', () => {
     test('Should return an account on loadByEmail success', async () => {
       const sut = makeSut();

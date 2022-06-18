@@ -1,9 +1,9 @@
 import { AccountModel } from '@/domain/models';
 
-export namespace LoadAccountbyEmailRepository {
+export namespace LoadAccountByEmailRepository {
   export type Result = AccountModel;
 }
 
-export interface LoadAccountbyEmailRepository {
-  loadByEmail (email: string): Promise<LoadAccountbyEmailRepository.Result>;
+export interface LoadAccountByEmailRepository {
+  loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result>;
 }
