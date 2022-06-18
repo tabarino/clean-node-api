@@ -48,8 +48,8 @@ describe('DbAuthentication UseCase', () => {
   test('Should return null if LoadAccountbyEmailRepository returns null', async () => {
     const { sut, loadAccountByEmailRepositorySpy } = makeSut();
     loadAccountByEmailRepositorySpy.accountModel = null;
-    const authenticationModel = await sut.auth(mockAuthenticationParams());
-    expect(authenticationModel).toBeNull();
+    const authenticationResult = await sut.auth(mockAuthenticationParams());
+    expect(authenticationResult).toBeNull();
   });
 
   test('Should call HashComparer with correct values', async () => {
@@ -70,8 +70,8 @@ describe('DbAuthentication UseCase', () => {
   test('Should return null if HashComparer returns false', async () => {
     const { sut, hashComparerSpy } = makeSut();
     hashComparerSpy.isValid = false;
-    const authenticationModel = await sut.auth(mockAuthenticationParams());
-    expect(authenticationModel).toBeNull();
+    const authenticationResult = await sut.auth(mockAuthenticationParams());
+    expect(authenticationResult).toBeNull();
   });
 
   test('Should call Encrypter with correct value', async () => {

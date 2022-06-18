@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { mockAccountModel } from '@/tests/domain/mocks';
-import { AccountModel, AuthenticationModel } from '@/domain/models';
-import { AddAccount, LoadAccountByToken, Authentication, AuthenticationParams } from '@/domain/usecases';
+import { AccountModel } from '@/domain/models';
+import { AddAccount, LoadAccountByToken, Authentication } from '@/domain/usecases';
 
 export class AddAccountSpy implements AddAccount {
   isValid = true;
@@ -14,11 +14,11 @@ export class AddAccountSpy implements AddAccount {
 }
 
 export class AuthenticationSpy implements Authentication {
-  authenticationParams: AuthenticationParams
+  authenticationParams: Authentication.Params
   accountName = faker.name.findName();
   accessToken = faker.datatype.uuid();
 
-  async auth (authentication: AuthenticationParams): Promise<AuthenticationModel> {
+  async auth (authentication: Authentication.Params): Promise<Authentication.Result> {
     this.authenticationParams = authentication;
     return Promise.resolve({
       name: this.accountName,
