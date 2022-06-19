@@ -1,4 +1,4 @@
-import { LoadSurveyById, LoadSurveyResult } from '@/domain/usecases';
+import { CheckSurveyById, LoadSurveyResult } from '@/domain/usecases';
 import { Controller, HttpResponse } from '@/presentation/protocols';
 import { forbidden, ok, serverError } from '@/presentation/helpers';
 import { InvalidParamError } from '@/presentation/errors';
@@ -12,7 +12,7 @@ export namespace LoadSurveyResultController {
 
 export class LoadSurveyResultController implements Controller {
   constructor (
-    private readonly loadSurveyById: LoadSurveyById,
+    private readonly checkSurveyById: CheckSurveyById,
     private readonly loadSurveyResult: LoadSurveyResult
   ) { }
 
@@ -21,8 +21,8 @@ export class LoadSurveyResultController implements Controller {
       const { surveyId } = request;
       const accountId = request.accountId;
 
-      const survey = await this.loadSurveyById.loadById(surveyId);
-      if (!survey) {
+      const hasSurvey = await this.checkSurveyById.checkById(surveyId);
+      if (!hasSurvey) {
         return forbidden(new InvalidParamError('surveyId'));
       }
 

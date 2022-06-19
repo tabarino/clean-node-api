@@ -1,2 +1,2 @@
-export * from './db-load-survey-result-factory';
-export * from './db-save-survey-result-factory';
+export * from './load-survey-result-factory';
+export * from './save-survey-result-factory';

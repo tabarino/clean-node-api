@@ -1,5 +1,5 @@
 import { SurveyModel } from '@/domain/models';
-import { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository } from '@/data/protocols';
+import { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository, CheckSurveyByIdRepository } from '@/data/protocols';
 import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks';
 
 export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
@@ -13,6 +13,16 @@ export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
     this.callsCount++;
     this.accountId = accountId;
     return Promise.resolve(this.surveyModels);
+  }
+}
+
+export class CheckSurveyByIdRepositorySpy implements CheckSurveyByIdRepository {
+  hasSurvey = true;
+  id: string;
+
+  async checkById (id: string): Promise<CheckSurveyByIdRepository.Result> {
+    this.id = id;
+    return Promise.resolve(this.hasSurvey);
   }
 }
 

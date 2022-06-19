@@ -101,13 +101,29 @@ describe('Survey Mongo Repository', () => {
   });
 
   describe('Load By Id Surveys', () => {
-    test('Should load survey by on success', async () => {
+    test('Should load survey by id on success', async () => {
       const result = await surveyCollection.insertOne(mockAddSurveyParams());
       const surveyId = result.insertedId.toString();
       const sut = makeSut();
       const survey = await sut.loadById(surveyId);
       expect(survey).toBeTruthy();
       expect(survey.id).toBeTruthy();
+    });
+  });
+
+  describe('Check By Id Surveys', () => {
+    test('Should return true if survey exists', async () => {
+      const result = await surveyCollection.insertOne(mockAddSurveyParams());
+      const surveyId = result.insertedId.toString();
+      const sut = makeSut();
+      const hasSurvey = await sut.checkById(surveyId);
+      expect(hasSurvey).toBe(true);
+    });
+
+    test('Should return false if survey does not exist', async () => {
+      const sut = makeSut();
+      const hasSurvey = await sut.checkById('123456789012');
+      expect(hasSurvey).toBe(false);
     });
   });
 });

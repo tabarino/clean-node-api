@@ -1,3 +1,4 @@
-export * from './db-add-survey-factory';
-export * from './db-load-survey-by-id-factory';
-export * from './db-load-surveys-factory';
+export * from './add-survey-factory';
+export * from './check-survey-by-id-factory';
+export * from './load-survey-by-id-factory';
+export * from './load-surveys-factory';

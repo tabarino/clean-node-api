@@ -1,6 +1,6 @@
 import { mockSurveyModels, mockSurveyModel } from '@/tests/domain/mocks';
 import { SurveyModel } from '@/domain/models';
-import { LoadSurveys, LoadSurveyById, AddSurvey } from '@/domain/usecases';
+import { LoadSurveys, LoadSurveyById, AddSurvey, CheckSurveyById } from '@/domain/usecases';
 
 export class AddSurveySpy implements AddSurvey {
   addSurveyParams: AddSurvey.Params;
@@ -8,6 +8,16 @@ export class AddSurveySpy implements AddSurvey {
   async add (data: AddSurvey.Params): Promise<void> {
     this.addSurveyParams = data;
     return Promise.resolve();
+  }
+}
+
+export class CheckSurveyByIdSpy implements CheckSurveyById {
+  hasSurvey = true;
+  id: string;
+
+  async checkById (id: string): Promise<CheckSurveyById.Result> {
+    this.id = id;
+    return Promise.resolve(this.hasSurvey);
   }
 }
 
@@ -27,7 +37,7 @@ export class LoadSurveyByIdSpy implements LoadSurveyById {
   surveyModel = mockSurveyModel();
   id: string;
 
-  async loadById (id: string): Promise<SurveyModel> {
+  async loadById (id: string): Promise<LoadSurveyById.Result> {
     this.id = id;
     return Promise.resolve(this.surveyModel);
   }
