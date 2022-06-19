@@ -1,4 +1,4 @@
-import { makeDbLoadSurveyById, makeDbSaveSurveyResult, makeLogControllerDecorator } from '@/main/factories';
+import { makeDbLoadAnswersBySurveyId, makeDbSaveSurveyResult, makeLogControllerDecorator } from '@/main/factories';
 import { Controller } from '@/presentation/protocols';
 import { SaveSurveyResultController } from '@/presentation/controllers';
 import { makeSaveSurveyResultValidation } from './save-survey-result-validation-factory';
@@ -6,7 +6,7 @@ import { makeSaveSurveyResultValidation } from './save-survey-result-validation-
 export const makeSaveSurveyResultController = (): Controller => {
   const controller = new SaveSurveyResultController(
     makeSaveSurveyResultValidation(),
-    makeDbLoadSurveyById(),
+    makeDbLoadAnswersBySurveyId(),
     makeDbSaveSurveyResult()
   );
   return makeLogControllerDecorator(controller);

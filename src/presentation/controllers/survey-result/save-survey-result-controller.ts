@@ -1,4 +1,4 @@
-import { LoadSurveyById, SaveSurveyResult } from '@/domain/usecases';
+import { LoadAnswersBySurveyId, SaveSurveyResult } from '@/domain/usecases';
 import { Controller, HttpResponse, Validation } from '@/presentation/protocols';
 import { ok, forbidden, serverError, badRequest } from '@/presentation/helpers';
 import { InvalidParamError } from '@/presentation/errors';
@@ -14,7 +14,7 @@ export namespace SaveSurveyResultController {
 export class SaveSurveyResultController implements Controller {
   constructor (
     private readonly validation: Validation,
-    private readonly loadSurveyById: LoadSurveyById,
+    private readonly loadAnswersBySurveyId: LoadAnswersBySurveyId,
     private readonly saveSurveyResult: SaveSurveyResult
   ) { }
 
@@ -27,12 +27,12 @@ export class SaveSurveyResultController implements Controller {
         return badRequest(error);
       }
 
-      const survey = await this.loadSurveyById.loadById(surveyId);
-      if (!survey) {
+      const answers = await this.loadAnswersBySurveyId.loadAnswers(surveyId);
+
+      if (answers.length === 0) {
         return forbidden(new InvalidParamError('surveyId'));
       }
 
-      const answers = survey.answers.map(a => a.answer);
       if (!answers.includes(answer)) {
         return forbidden(new InvalidParamError('answer'));
       }
