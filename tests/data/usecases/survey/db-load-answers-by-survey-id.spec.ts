@@ -1,48 +1,48 @@
 import { faker } from '@faker-js/faker';
 import { DbLoadAnswersBySurveyId } from '@/data/usecases';
 import { mockThrowError } from '@/tests/domain/mocks';
-import { LoadSurveyByIdRepositorySpy } from '@/tests/data/mocks';
+import { LoadAnswersBySurveyIdRepositorySpy } from '@/tests/data/mocks';
 
 type SutTypes = {
   sut: DbLoadAnswersBySurveyId;
-  loadSurveyByIdRepositorySpy: LoadSurveyByIdRepositorySpy;
+  loadAnswersBySurveyIdRepositorySpy: LoadAnswersBySurveyIdRepositorySpy;
 }
 
 const makeSut = (): SutTypes => {
-  const loadSurveyByIdRepositorySpy = new LoadSurveyByIdRepositorySpy();
-  const sut = new DbLoadAnswersBySurveyId(loadSurveyByIdRepositorySpy);
-  return { sut, loadSurveyByIdRepositorySpy };
+  const loadAnswersBySurveyIdRepositorySpy = new LoadAnswersBySurveyIdRepositorySpy();
+  const sut = new DbLoadAnswersBySurveyId(loadAnswersBySurveyIdRepositorySpy);
+  return { sut, loadAnswersBySurveyIdRepositorySpy };
 };
 
 let surveyId: string;
 
-describe('DbLoadSurveyById', () => {
+describe('DbLoadAnswersBySurveyId', () => {
   beforeEach(() => {
     surveyId = faker.datatype.uuid();
   })
 
-  test('Should call LoadSurveyByIdRepository', async () => {
-    const { sut, loadSurveyByIdRepositorySpy } = makeSut();
+  test('Should call LoadAnswersBySurveyIdRepository', async () => {
+    const { sut, loadAnswersBySurveyIdRepositorySpy } = makeSut();
     await sut.loadAnswers(surveyId)
-    expect(loadSurveyByIdRepositorySpy.id).toBe(surveyId);
+    expect(loadAnswersBySurveyIdRepositorySpy.id).toBe(surveyId);
   });
 
-  test('Should throw if LoadSurveyByIdRepository throws', async () => {
-    const { sut, loadSurveyByIdRepositorySpy } = makeSut();
-    jest.spyOn(loadSurveyByIdRepositorySpy, 'loadById').mockImplementationOnce(mockThrowError);
+  test('Should throw if LoadAnswersBySurveyIdRepository throws', async () => {
+    const { sut, loadAnswersBySurveyIdRepositorySpy } = makeSut();
+    jest.spyOn(loadAnswersBySurveyIdRepositorySpy, 'loadAnswers').mockImplementationOnce(mockThrowError);
     const promise = sut.loadAnswers(surveyId);
     await expect(promise).rejects.toThrow();
   });
-  test('Should return empty array if LoadSurveyByIdRepository returns null', async () => {
-    const { sut, loadSurveyByIdRepositorySpy } = makeSut();
-    loadSurveyByIdRepositorySpy.surveyModel = null;
+  test('Should return empty array if LoadAnswersBySurveyIdRepository returns []', async () => {
+    const { sut, loadAnswersBySurveyIdRepositorySpy } = makeSut();
+    loadAnswersBySurveyIdRepositorySpy.answers = [];
     const answers = await sut.loadAnswers(surveyId);
     expect(answers).toEqual([]);
   });
 
   test('Should return answers on success', async () => {
-    const { sut, loadSurveyByIdRepositorySpy } = makeSut();
+    const { sut, loadAnswersBySurveyIdRepositorySpy } = makeSut();
     const answers = await sut.loadAnswers(surveyId);
-    expect(answers).toEqual(loadSurveyByIdRepositorySpy.surveyModel.answers.map(a => a.answer));
+    expect(answers).toEqual(loadAnswersBySurveyIdRepositorySpy.answers);
   });
 });

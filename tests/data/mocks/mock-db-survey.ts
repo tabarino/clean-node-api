@@ -1,5 +1,12 @@
+import { faker } from '@faker-js/faker';
 import { SurveyModel } from '@/domain/models';
-import { AddSurveyRepository, LoadSurveyByIdRepository, LoadSurveysRepository, CheckSurveyByIdRepository } from '@/data/protocols';
+import {
+  AddSurveyRepository,
+  LoadSurveyByIdRepository,
+  LoadSurveysRepository,
+  CheckSurveyByIdRepository,
+  LoadAnswersBySurveyIdRepository
+} from '@/data/protocols';
 import { mockSurveyModel, mockSurveyModels } from '@/tests/domain/mocks';
 
 export class LoadSurveysRepositorySpy implements LoadSurveysRepository {
@@ -33,6 +40,16 @@ export class LoadSurveyByIdRepositorySpy implements LoadSurveyByIdRepository {
   async loadById (id: string): Promise<LoadSurveyByIdRepository.Result> {
     this.id = id;
     return Promise.resolve(this.surveyModel);
+  }
+}
+
+export class LoadAnswersBySurveyIdRepositorySpy implements LoadAnswersBySurveyIdRepository {
+  answers = [faker.random.word(), faker.random.word()];
+  id: string;
+
+  async loadAnswers (id: string): Promise<LoadAnswersBySurveyIdRepository.Result> {
+    this.id = id;
+    return Promise.resolve(this.answers);
   }
 }
 

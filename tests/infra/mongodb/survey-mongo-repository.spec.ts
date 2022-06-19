@@ -100,7 +100,7 @@ describe('Survey Mongo Repository', () => {
     });
   });
 
-  describe('Load By Id Surveys', () => {
+  describe('Load Surveys By Id', () => {
     test('Should load survey by id on success', async () => {
       const result = await surveyCollection.insertOne(mockAddSurveyParams());
       const surveyId = result.insertedId.toString();
@@ -109,9 +109,32 @@ describe('Survey Mongo Repository', () => {
       expect(survey).toBeTruthy();
       expect(survey.id).toBeTruthy();
     });
+
+    test('Should return null if survey does not exist', async () => {
+      const sut = makeSut();
+      const survey = await sut.loadById('123456789012');
+      expect(survey).toBeFalsy();
+    });
   });
 
-  describe('Check By Id Surveys', () => {
+  describe('Load Answers By Surveys Id', () => {
+    test('Should load answers on success', async () => {
+      const addSurveyParams = mockAddSurveyParams();
+      const result = await surveyCollection.insertOne(addSurveyParams);
+      const surveyId = result.insertedId.toString();
+      const sut = makeSut();
+      const answers = await sut.loadAnswers(surveyId);
+      expect(answers).toEqual(addSurveyParams.answers.map(a => a.answer));
+    });
+
+    test('Should return empty array if survey does not exist', async () => {
+      const sut = makeSut();
+      const answers = await sut.loadAnswers('123456789012');
+      expect(answers).toEqual([]);
+    });
+  });
+
+  describe('Check Surveys By Id', () => {
     test('Should return true if survey exists', async () => {
       const result = await surveyCollection.insertOne(mockAddSurveyParams());
       const surveyId = result.insertedId.toString();
