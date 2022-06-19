@@ -1,5 +1,6 @@
-import { HttpRequest, HttpResponse } from './http';
+import { AuthMiddleware } from '../middlewares';
+import { HttpResponse } from './http';
 
 export interface Middleware {
-  handle (httpRequest: HttpRequest): Promise<HttpResponse>;
+  handle (request: AuthMiddleware.Request): Promise<HttpResponse>;
 }

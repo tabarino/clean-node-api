@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker';
-import { SurveyModel } from '@/domain/models';
 import { LoadSurveys, LoadAnswersBySurveyId, AddSurvey, CheckSurveyById } from '@/domain/usecases';
 import { mockSurveyModels } from '@/tests/domain/mocks';
 
@@ -27,7 +26,7 @@ export class LoadSurveysSpy implements LoadSurveys {
   accountId: string;
   callsCount = 0;
 
-  async load (accountId: string): Promise<SurveyModel[]> {
+  async load (accountId: string): Promise<LoadSurveys.Result> {
     this.accountId = accountId;
     this.callsCount++;
     return Promise.resolve(this.surveyModels);
